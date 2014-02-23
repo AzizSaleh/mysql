@@ -53,7 +53,10 @@ Alternative host:
 This project can also be found on phpclasses.org:
 http://www.phpclasses.org/package/8221-PHP-Access-MySQL-databases-using-PDO-wrapper-functions.html
 
-I will try my best to keep it updated, but the GitHub repo will always be updated.
+and GitHub:
+https://github.com/AzizSaleh/mysql
+
+I will try my best to keep them updated.
 
 Drawbacks of this library
 =========================
