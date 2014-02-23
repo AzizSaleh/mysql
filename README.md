@@ -8,7 +8,6 @@ Implementation:
 ---------------
 In your bootstrap, include:
 
-    <?php
     // Include the definitions
     require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'MySQL_Definitions.php');
      
@@ -19,14 +18,11 @@ In your bootstrap, include:
     require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'MySQL_Functions.php');
      
     // Now all of the mysql_* methods will work on a PHP version that has them removed.
-    ?>
 
 (OPTIONAL : SEE DRAWBACKS) Update your error reporting to (depending on environment):
 
-    <?php
     error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT); // Production
     error_reporting(E_ALL & ~E_STRICT); // Development
-    ?>
 
 (OPTIONAL : SEE DRAWBACKS) If you are using is_resource / get_resource_type for mysql_ methods you will need to replace them with the following functions: is_resource_custom / get_resource_type_custom. You can use your IDE to search replace or the following two lines in your project base:
 
@@ -117,11 +113,9 @@ If you pass a constant to the following methods (ex: string), you will  trigger 
 
 To fix, you will need to change your error reporting hide strict standards (anything <= 30719). Examples:
 
-    <?php
     error_reporting(30719); // <= 30719
     error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT); // Production
     error_reporting(E_ALL & ~E_STRICT); // Development
-    ?>
 
 About:
 ------
@@ -142,13 +136,13 @@ Version 1.1
 Version History:
 ----------------
 1.0 - September 2013
-    * Initial release.
-    * Tested via unit testing on PHP 5.0
+* Initial release.
+* Tested via unit testing on PHP 5.0
 
 1.1 - February 2014
-    * Initial Github release.
-    * Sever Bugs reported by Domenic LaRosa fixed.
-    * Tested on PHP 5.5.59
-    * Added is_resource_custom/get_resource_type_custom functions.
-    * Added unit test for PHP >= 5.5.5
-    * Fixed some logical issues not tested on PHP >= 5.5.5
+* Initial Github release.
+* Sever Bugs reported by Domenic LaRosa fixed.
+* Tested on PHP 5.5.59
+* Added is_resource_custom/get_resource_type_custom functions.
+* Added unit test for PHP >= 5.5.5
+* Fixed some logical issues not tested on PHP >= 5.5.5
