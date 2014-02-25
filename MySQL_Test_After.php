@@ -116,7 +116,7 @@ class MySQL_Test
             if ($this->$test()) {
                 $this->results['valid']++;
                 printf($masker, $test, 'Success');
-            } else {die($name);
+            } else {
                 $this->results['invalid']++;
                 printf($masker, $test, 'Failure');
             }
@@ -460,8 +460,8 @@ class MySQL_Test
 
         // Get encoding
         $code1 = mysql_client_encoding();
-        
-        return $code1 === "utf8";
+
+        return strlen($code1) > 4;
     }    
 
     /**
@@ -857,7 +857,8 @@ class MySQL_Test
     public function MySQL_Get_Server_Info_Test()
     {
         $str1 = mysql_get_server_info();
-        return preg_match('/[0-9\.]+\-.*/', $str1);
+
+        return preg_match('/[0-9\.]+(\-.*)?/', $str1);
     }
     
     /**
