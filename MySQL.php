@@ -179,8 +179,9 @@
         $this->_params[$link]['lastQuery'] = false;
 
         // Set query error
-        $this->_params[$link]['errno'] = $this->_instances[$link]->errorCode()[0];
-        $this->_params[$link]['error'] = $this->_instances[$link]->errorInfo()[2];
+        $errorCode = $this->_instances[$link]->errorInfo();
+        $this->_params[$link]['errno'] = $errorCode[1];
+        $this->_params[$link]['error'] = $errorCode[2];
         return false;
     }
     
@@ -204,8 +205,9 @@
         if ($result === false) {
             echo 'Warning: mysql_fetch_*(): supplied argument is not a valid MySQL result resource' . PHP_EOL;
             return false;
-        }
+        }        
 
+        // Are we only doing length counts?
         if ($doCounts === true) {
             return $this->_mysqlGetLengths($last, $elementId);
         }

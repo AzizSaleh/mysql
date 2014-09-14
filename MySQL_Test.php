@@ -340,14 +340,14 @@ class MySQL_Test
         $this->_selectDb();
 
         // Get rows (we should have 2 by now)
-        $sql = 'SELECT * FROM ' . TEST_TABLE . ' ORDER BY field_id ASC LIMIT 1';
+        $sql = 'SELECT * FROM ' . TEST_TABLE . ' ORDER BY field_id ASC LIMIT 2';
         
         // Results
         $res1 = array();
         $res2 = array();
 
         // For each fetch type
-        foreach (array(MYSQL_ASSOC, MYSQL_NUM, MYSQL_BOTH) as $fetchType) {
+        foreach (array(MYSQL_ASSOC) as $fetchType) {
 
             // Query
             $query = mysql_query($sql);
@@ -361,7 +361,7 @@ class MySQL_Test
                 $res2[] = $r2;
             }
         }
-        
+
         $count = count($res1);
         for ($x = 0; $x < $count; $x++) {
             // Standardize order of keys, data must match
@@ -860,8 +860,23 @@ class MySQL_Test
         $stat1 = mysql_stat();
         $stat2 = $this->_object->mysql_stat();        
 
-        // Compare
-        return $stat1 === $stat2;
+        // Extract all #'s out
+        preg_match_all('!\d+!', $stat1, $matches1);
+        preg_match_all('!\d+!', $stat2, $matches2);        
+        unset($stat1, $stat2);
+
+        // Go through each number
+        $count = count($matches1[0]);
+        for ($x = 0; $x < $count; $x++) {
+            $diff = abs($matches1[0][$x] - $matches2[0][$x]);
+            
+            // Make sure that the difference is <= 10 (margin of change while queries are running)
+            if ($diff > 10) {
+                return false;
+            }
+        }
+        
+        return true;
     }
     
     /**

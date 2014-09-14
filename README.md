@@ -120,6 +120,15 @@ To fix, you will need to change your error reporting hide strict standards (anyt
     error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT); // Production
     error_reporting(E_ALL & ~E_STRICT); // Development
 
+Unit Testing
+-------------
+
+There are 2 unit tests available in this project:
+
+* MySQL_Test.php - Run this test is you are using PHP with mysql_connect() enabled.
+* MySQL_Test_After.php - Run this test if the PHP version you have does not have mysql_connect() enabled.
+
+
 About:
 ------
 If you run into any issues, bugs, features or make things better please send them to me and I will get them in as soon as I can.
@@ -149,3 +158,7 @@ Version History:
 * Added is_resource_custom/get_resource_type_custom functions.
 * Added unit test for PHP >= 5.5.5
 * Fixed some logical issues not tested on PHP >= 5.5.5
+
+1.2 - September 2014
+ * Fixed an issue (Thanks to Martijn Spruit) where the script was breaking on PHP V <= 5.3.8
+ * Updated unit test for MySQL_Stat_Test to allow a <= 10 difference between the numbers.
