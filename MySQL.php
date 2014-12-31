@@ -203,7 +203,7 @@
         static $last = null;
 
         if ($result === false) {
-            echo 'Warning: mysql_fetch_*(): supplied argument is not a valid MySQL result resource' . PHP_EOL;
+            trigger_error('mysql_fetch_*(): supplied argument is not a valid MySQL result resource', E_USER_WARNING);
             return false;
         }        
 
@@ -242,7 +242,7 @@
             // Check valid skip
             $rowNumber = $this->_rowSeek[$hash];
             if ($rowNumber > count($result) - 1) {
-                echo "Warning: mysql_data_seek(): Offset $rowNumber is invalid for MySQL result (or the query data is unbuffered)" . PHP_EOL;
+                trigger_error("mysql_data_seek(): Offset $rowNumber is invalid for MySQL result (or the query data is unbuffered)", E_USER_WARNING);
             }
 
             while($rowNumber > 0) {
@@ -313,8 +313,12 @@
         // Hard clone (cloning PDOStatements doesn't work)
         $query = $result->queryString;
         $cloned = $this->mysql_query($query);
-        $data = $cloned->fetchAll();
-        return count($data);
+        if ($cloned) {
+            $data = $cloned->fetchAll();
+            return count($data);
+        } else {
+            return false;
+        }
     }
 
     /**
