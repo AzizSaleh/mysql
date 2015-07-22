@@ -1,0 +1,20 @@
+{
+    "name": "matthewbaggett/mysql2pdo",
+    "description": "MySQL2PDO adaptor",
+    "license": "GPL-3.0",
+    "authors": [
+	{
+	    "name": "Aziz S. Hussain",
+	    "email": "azizsaleh@gmail.com"
+	},
+        {
+            "name": "Matthew Baggett",
+            "email": "matthew@baggett.me"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "files": ["MySQL.php", "MySQL_Definitions.php", "MySQL_Functions.php"]
+    }
+}
