@@ -15,6 +15,6 @@
     "minimum-stability": "stable",
     "require": {},
     "autoload": {
-        "files": ["MySQL.php", "MySQL_Definitions.php", "MySQL_Functions.php"]
+        "files": ["MySQL.php", "MySQL_Definitions.php", "MySQL_Functions.php", "MySQL2PDOException.php"]
     }
 }
