@@ -78,6 +78,27 @@
         return self::$_instance;
     }
 
+    public function mysql_add_existing_connection($dbh)
+    {
+        $usePosition = count($this->_instances) + 1;
+        
+        // Set connection params
+        $this->_params[$usePosition] = array (
+            'server'        => '',
+            'username'      => '',
+            'password'      => '',
+            'newLink'       => true,
+            'clientFlags'   => array(),
+            'errno'         => 0,
+            'error'         => "",
+            'rowCount'      => -1,
+            'lastQuery'     => false,
+        );
+        
+        $this->_instances[$usePosition] = $dbh;
+        return true;
+    }
+    
     /**
      * mysql_connect
      * http://www.php.net/manual/en/function.mysql-connect.php
@@ -86,7 +107,7 @@
     {
         // If we don't have to create a new instance and we have an instance, return it
         if ($newLink == false && count($this->_instances) > 1) {
-            return 1;
+            return count($this->_instances);
         }
         
         $flags = $this->_translateFlags($clientFlags);
