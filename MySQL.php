@@ -1161,9 +1161,9 @@
         if ($validate === true && !isset($this->_instances[$link]) || empty($this->_instances[$link])) {
             $error = '';
             if (isset($this->_instances[$link])) {
-                die($this->_params[$link]['errno'] .': ' . $this->_params[$link]['error']);
+                throw new MySQL2PDOException($this->_params[$link]['errno'] .': ' . $this->_params[$link]['error']);
             } else {
-                die('No db at instance #' . ($link - 1));
+                throw new MySQL2PDOException('No db at instance #' . ($link - 1));
             }
         }
         return $link;
