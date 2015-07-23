@@ -1159,7 +1159,6 @@
         }
 
         if ($validate === true && !isset($this->_instances[$link]) || empty($this->_instances[$link])) {
-            $error = '';
             if (isset($this->_instances[$link])) {
                 throw new MySQL2PDOException($this->_params[$link]['errno'] .': ' . $this->_params[$link]['error']);
             } else {
