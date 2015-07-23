@@ -4,10 +4,10 @@
  * to insure that they return the data as intended
  *
  * This test should be run with a MySQL functions removed
- * 
+ *
  * @author    Aziz S. Hussain <azizsaleh@gmail.com>
- * @copyright GPL license 
- * @license   http://www.gnu.org/copyleft/gpl.html 
+ * @copyright GPL license
+ * @license   http://www.gnu.org/copyleft/gpl.html
  * @link      http://www.AzizSaleh.com
  */
 
@@ -30,10 +30,10 @@ require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'MySQL_Functions.php');
  * MySQL_Test
  *
  * Test object
- * 
+ *
  * @author    Aziz S. Hussain <azizsaleh@gmail.com>
- * @copyright GPL license 
- * @license   http://www.gnu.org/copyleft/gpl.html 
+ * @copyright GPL license
+ * @license   http://www.gnu.org/copyleft/gpl.html
  * @link      http://www.AzizSaleh.com
  */
 class MySQL_Test
@@ -82,7 +82,8 @@ class MySQL_Test
 
         // Load db first
         $link = mysql_pconnect(TEST_HOST, TEST_USER, TEST_PASS);
-        $statements = explode(';', 
+        $statements = explode(
+            ';',
             file_get_contents(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'MySQL_Test_Schema.sql')
         );
 
@@ -93,7 +94,6 @@ class MySQL_Test
 
         // Go through each test
         foreach ($tests as $test) {
-        
             // Skip private/protected methods
             if (substr($test, 0, 1) == '_') {
                 continue;
@@ -305,7 +305,6 @@ class MySQL_Test
 
         // For each fetch type
         foreach (array(MYSQL_ASSOC, MYSQL_NUM, MYSQL_BOTH) as $fetchType) {
-
             // Query
             $query = mysql_query($sql);
 
@@ -323,7 +322,7 @@ class MySQL_Test
                 if ($thisCount != 3 || !is_string($keys[0]) || !is_string($keys[1])) {
                     return false;
                 }
-            } else if ($x == 1) {
+            } elseif ($x == 1) {
                 if ($thisCount != 3 || !is_int($keys[0]) || !is_int($keys[1])) {
                     return false;
                 }
@@ -462,7 +461,7 @@ class MySQL_Test
         $code1 = mysql_client_encoding();
 
         return strlen($code1) > 4;
-    }    
+    }
 
     /**
      * Test mysql_close
@@ -544,7 +543,7 @@ class MySQL_Test
         $list1 = array();
 
         while ($a = mysql_fetch_row($dbs1)) {
-            $list1[] = $a[0];        
+            $list1[] = $a[0];
         }
 
         // Must have the two dbs we created
@@ -572,7 +571,7 @@ class MySQL_Test
         // Connect
         $this->_getConnection();
         
-        $dbs1 = mysql_list_dbs();        
+        $dbs1 = mysql_list_dbs();
 
         $list1 = array();
 
@@ -583,7 +582,7 @@ class MySQL_Test
             $i++;
         }
 
-        return (in_array('unit_sql_v_1', $list1) && in_array('unit_sql_v_2', $list1));  
+        return (in_array('unit_sql_v_1', $list1) && in_array('unit_sql_v_2', $list1));
     }
     
     /**
@@ -659,7 +658,6 @@ class MySQL_Test
 
         // For each fetch type
         foreach (array(MYSQL_ASSOC, MYSQL_NUM, MYSQL_BOTH) as $fetchType) {
-
             // Query
             $query = mysql_unbuffered_query($sql);
 
@@ -677,7 +675,7 @@ class MySQL_Test
                 if ($thisCount != 3 || !is_string($keys[0]) || !is_string($keys[1])) {
                     return false;
                 }
-            } else if ($x == 1) {
+            } elseif ($x == 1) {
                 if ($thisCount != 3 || !is_int($keys[0]) || !is_int($keys[1])) {
                     return false;
                 }
@@ -908,7 +906,7 @@ class MySQL_Test
         $count1 = 0;
         // Validate query to avoid throwing errors
         while (is_resource_custom($query1) && get_resource_type_custom($query1) == 'mysql result' && $row = mysql_fetch_assoc($query1)) {
-            $count1++;            
+            $count1++;
             mysql_free_result($query1);
         }
 
@@ -1300,7 +1298,7 @@ class MySQL_Test
      * Select Db
      *
      * @param boolean $mysql
-     * 
+     *
      * @return void
      */
     protected function _selectDb($mysql = false)

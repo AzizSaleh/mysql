@@ -2,15 +2,15 @@
 /**
  * This file will contain needed definitions for MYSQL
  * http://www.php.net/manual/en/mysql.constants.php
- * 
+ *
  * @author    Aziz S. Hussain <azizsaleh@gmail.com>
- * @copyright GPL license 
- * @license   http://www.gnu.org/copyleft/gpl.html 
+ * @copyright GPL license
+ * @license   http://www.gnu.org/copyleft/gpl.html
  * @link      http://www.AzizSaleh.com
  */
 
 if (defined('MYSQL_ASSOC')) {
-   return;
+    return;
 }
 
 define('MYSQL_CLIENT_LONG_PASSWORD', 1);

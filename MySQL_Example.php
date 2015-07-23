@@ -5,8 +5,8 @@
  * need to update connection/database/table info
  *
  * @author    Aziz S. Hussain <azizsaleh@gmail.com>
- * @copyright GPL license 
- * @license   http://www.gnu.org/copyleft/gpl.html 
+ * @copyright GPL license
+ * @license   http://www.gnu.org/copyleft/gpl.html
  * @link      http://www.AzizSaleh.com
  */
 
@@ -27,7 +27,7 @@ if (!$link) {
 // make foo the current db
 $db_selected = mysql_select_db('unit_sql_v_1', $link);
 if (!$db_selected) {
-    die ('Can\'t use foo : ' . mysql_error());
+    die('Can\'t use foo : ' . mysql_error());
 }
 
 $sql = "SELECT * FROM unit_sql_table_1 WHERE field_id >= 1";

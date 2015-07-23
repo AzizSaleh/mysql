@@ -4,10 +4,10 @@
  * functions so that they match our functions
  *
  * This test should be run with a MySQL functions enabled
- * 
+ *
  * @author    Aziz S. Hussain <azizsaleh@gmail.com>
- * @copyright GPL license 
- * @license   http://www.gnu.org/copyleft/gpl.html 
+ * @copyright GPL license
+ * @license   http://www.gnu.org/copyleft/gpl.html
  * @link      http://www.AzizSaleh.com
  */
 
@@ -29,10 +29,10 @@ require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'MySQL_Definitions.php');
  * MySQL_Test
  *
  * Test object
- * 
+ *
  * @author    Aziz S. Hussain <azizsaleh@gmail.com>
- * @copyright GPL license 
- * @license   http://www.gnu.org/copyleft/gpl.html 
+ * @copyright GPL license
+ * @license   http://www.gnu.org/copyleft/gpl.html
  * @link      http://www.AzizSaleh.com
  */
 class MySQL_Test
@@ -91,7 +91,8 @@ class MySQL_Test
 
         // Load db first
         $link = mysql_connect(TEST_HOST, TEST_USER, TEST_PASS);
-        $statements = explode(';', 
+        $statements = explode(
+            ';',
             file_get_contents(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'MySQL_Test_Schema.sql')
         );
 
@@ -102,7 +103,6 @@ class MySQL_Test
 
         // Go through each test
         foreach ($tests as $test) {
-        
             // Skip private/protected methods
             if (substr($test, 0, 1) == '_') {
                 continue;
@@ -348,7 +348,6 @@ class MySQL_Test
 
         // For each fetch type
         foreach (array(MYSQL_ASSOC) as $fetchType) {
-
             // Query
             $query = mysql_query($sql);
             $query2 = $this->_object->mysql_query($sql);
@@ -357,7 +356,7 @@ class MySQL_Test
             while ($r = mysql_fetch_array($query, $fetchType)) {
                 $res1[] = $r;
             }
-            while($r2 = $this->_object->mysql_fetch_array($query2, $fetchType)) {
+            while ($r2 = $this->_object->mysql_fetch_array($query2, $fetchType)) {
                 $res2[] = $r2;
             }
         }
@@ -424,7 +423,7 @@ class MySQL_Test
         while ($r = mysql_fetch_object($query)) {
             $res1[] = $r;
         }
-        while($r2 = $this->_object->mysql_fetch_object($query2)) {
+        while ($r2 = $this->_object->mysql_fetch_object($query2)) {
             $res2[] = $r2;
         }
 
@@ -513,7 +512,7 @@ class MySQL_Test
         $code2 = $this->_object->mysql_client_encoding();
         
         return $code1 === $code2;
-    }    
+    }
 
     /**
      * Test mysql_close
@@ -602,10 +601,10 @@ class MySQL_Test
         $list2 = array();
 
         while ($a = mysql_fetch_row($dbs1)) {
-            $list1[] = $a[0];        
+            $list1[] = $a[0];
         }
         while ($a = $this->_object->mysql_fetch_row($dbs2)) {
-            $list2[] = $a[0];        
+            $list2[] = $a[0];
         }
 
         return $list1 === $list2;
@@ -735,7 +734,6 @@ class MySQL_Test
 
         // For each fetch type
         foreach (array(MYSQL_ASSOC, MYSQL_NUM, MYSQL_BOTH) as $fetchType) {
-
             // Query
             $query = mysql_unbuffered_query($sql);
             $query2 = $this->_object->mysql_unbuffered_query($sql);
@@ -744,7 +742,7 @@ class MySQL_Test
             while ($r = mysql_fetch_array($query, $fetchType)) {
                 $res1[] = $r;
             }
-            while($r2 = $this->_object->mysql_fetch_array($query2, $fetchType)) {
+            while ($r2 = $this->_object->mysql_fetch_array($query2, $fetchType)) {
                 $res2[] = $r2;
             }
         }
@@ -797,7 +795,7 @@ class MySQL_Test
         while ($r = mysql_fetch_assoc($query)) {
             $res1[] = $r;
         }
-        while($r2 = $this->_object->mysql_fetch_assoc($query2)) {
+        while ($r2 = $this->_object->mysql_fetch_assoc($query2)) {
             $res2[] = $r2;
         }
 
@@ -858,11 +856,11 @@ class MySQL_Test
     {
         // Get stats
         $stat1 = mysql_stat();
-        $stat2 = $this->_object->mysql_stat();        
+        $stat2 = $this->_object->mysql_stat();
 
         // Extract all #'s out
         preg_match_all('!\d+!', $stat1, $matches1);
-        preg_match_all('!\d+!', $stat2, $matches2);        
+        preg_match_all('!\d+!', $stat2, $matches2);
         unset($stat1, $stat2);
 
         // Go through each number
@@ -1455,7 +1453,7 @@ class MySQL_Test
      *
      * @param boolean $mysql
      * @param boolean $ourDb
-     * 
+     *
      * @return void
      */
     protected function _selectDb($mysql = false, $ourDb = false)

@@ -10,8 +10,8 @@
  * subscript last connection.
  *
  * @author    Aziz S. Hussain <azizsaleh@gmail.com>
- * @copyright GPL license 
- * @license   http://www.gnu.org/copyleft/gpl.html 
+ * @copyright GPL license
+ * @license   http://www.gnu.org/copyleft/gpl.html
  * @link      http://www.AzizSaleh.com
  */
 
@@ -20,14 +20,14 @@
  *
  * This object will replicate MySQL functions
  * http://www.php.net/manual/en/ref.mysql.php
- * 
+ *
  * @author    Aziz S. Hussain <azizsaleh@gmail.com>
- * @copyright GPL license 
- * @license   http://www.gnu.org/copyleft/gpl.html 
+ * @copyright GPL license
+ * @license   http://www.gnu.org/copyleft/gpl.html
  * @link      http://www.AzizSaleh.com
  */
- class MySQL
- {
+class MySQL
+{
     /**
      * Object instance
      *
@@ -226,7 +226,7 @@
         if ($result === false) {
             trigger_error('mysql_fetch_*(): supplied argument is not a valid MySQL result resource', E_USER_WARNING);
             return false;
-        }        
+        }
 
         // Are we only doing length counts?
         if ($doCounts === true) {
@@ -266,7 +266,7 @@
                 trigger_error("mysql_data_seek(): Offset $rowNumber is invalid for MySQL result (or the query data is unbuffered)", E_USER_WARNING);
             }
 
-            while($rowNumber > 0) {
+            while ($rowNumber > 0) {
                 next($result);
                 $rowNumber--;
             }
@@ -624,7 +624,7 @@
      * mysql_stat
      * http://www.php.net/manual/en/function.mysql-stat.php
      */
-    public function mysql_stat($link = false) 
+    public function mysql_stat($link = false)
     {
         $link = $this->_getLastLink($link);
         return $this->_instances[$link]->getAttribute(PDO::ATTR_SERVER_INFO);
@@ -634,7 +634,7 @@
      * mysql_get_server_info
      * http://www.php.net/manual/en/function.mysql-get-server-info.php
      */
-    public function mysql_get_server_info($link = false) 
+    public function mysql_get_server_info($link = false)
     {
         $link = $this->_getLastLink($link);
         return $this->_instances[$link]->getAttribute(PDO::ATTR_SERVER_VERSION);
@@ -658,7 +658,7 @@
      * mysql_get_host_info
      * http://www.php.net/manual/en/function.mysql-get-server-info.php
      */
-    public function mysql_get_host_info($link = false) 
+    public function mysql_get_host_info($link = false)
     {
         $link = $this->_getLastLink($link);
         return $this->_instances[$link]->getAttribute(PDO::ATTR_CONNECTION_STATUS);
@@ -668,7 +668,7 @@
      * mysql_get_client_info
      * http://www.php.net/manual/en/function.mysql-get-client-info.php
      */
-    public function mysql_get_client_info($link = false) 
+    public function mysql_get_client_info($link = false)
     {
         $link = $this->_getLastLink($link);
         return $this->_instances[$link]->getAttribute(PDO::ATTR_CLIENT_VERSION);
@@ -678,7 +678,7 @@
      * mysql_free_result
      * http://www.php.net/manual/en/function.mysql-free-result.php
      */
-    public function mysql_free_result(&$result) 
+    public function mysql_free_result(&$result)
     {
         if (is_array($result)) {
             $result = false;
@@ -722,7 +722,7 @@
      * mysql_list_processes
      * http://www.php.net/manual/en/function.mysql-list-processes.php
      */
-    public function mysql_list_processes($link = false) 
+    public function mysql_list_processes($link = false)
     {
         $link = $this->_getLastLink($link);
         return $this->_instances[$link]->query("SHOW PROCESSLIST");
@@ -732,7 +732,7 @@
      * mysql_set_charset
      * http://www.php.net/manual/en/function.mysql-set-charset.php
      */
-    public function mysql_set_charset($charset, $link = false) 
+    public function mysql_set_charset($charset, $link = false)
     {
         $link = $this->_getLastLink($link);
         $set = "SET character_set_results = '$charset', character_set_client = '$charset', character_set_connection = '$charset', character_set_database = '$charset', character_set_server = '$charset'";
@@ -763,7 +763,7 @@
      * mysql_errno
      * http://www.php.net/manual/en/function.mysql-errno.php
      */
-    public function mysql_errno($link = false) 
+    public function mysql_errno($link = false)
     {
         $link = $this->_getLastLink($link, false);
         return $this->_params[$link]['errno'];
@@ -773,7 +773,7 @@
      * mysql_error
      * http://www.php.net/manual/en/function.mysql-error.php
      */
-    public function mysql_error($link = false) 
+    public function mysql_error($link = false)
     {
         $link = $this->_getLastLink($link, false);
         return $this->_params[$link]['error'];
@@ -887,7 +887,7 @@
         if (is_object($resource) && $resource instanceof PDOStatement) {
             return true;
         // Check if it is a mysql instance
-        } else if (isset($this->_instances[$resource]) && !empty($this->_instances[$resource])) {
+        } elseif (isset($this->_instances[$resource]) && !empty($this->_instances[$resource])) {
             return true;
         }
 
@@ -911,7 +911,7 @@
         // Check if it is a mysql instance
         if (isset($this->_instances[$resource]) && !empty($this->_instances[$resource])) {
             // Check type
-            if ($this->_params[$resource]['clientFlags'] == PDO::ATTR_PERSISTENT){
+            if ($this->_params[$resource]['clientFlags'] == PDO::ATTR_PERSISTENT) {
                 return 'mysql link persistent';
             } else {
                 return 'mysql link';
@@ -1093,9 +1093,8 @@
          */
         $pdoParams = array();
         foreach ($mysqlFlags as $flag) {
-            switch ($flag)
-            {
-                // CLIENT_FOUND_ROWS (found instead of affected rows)
+            switch ($flag) {
+            // CLIENT_FOUND_ROWS (found instead of affected rows)
                 case 2:
                     $params = array(PDO::MYSQL_ATTR_FOUND_ROWS => true);
                     break;
@@ -1200,4 +1199,4 @@
 
         return $resultSet[$elementId];
     }
- }
+}

@@ -1,4 +1,5 @@
 <?php
-class MySQL2PDOException extends \Exception{
+class MySQL2PDOException extends \Exception
+{
 
 }
