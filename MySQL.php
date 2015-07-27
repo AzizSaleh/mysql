@@ -745,8 +745,14 @@ class MySQL
      */
     public function mysql_insert_id($link = false)
     {
-        $link = $this->_getLastLink($link);
-        return $this->_instances[$link]->lastInsertId();
+        if(!$link instanceof PDOStatement) {
+            $link = $this->_getLastLink($link);
+            $resource = $this->_instances[$link];
+        }else{
+            $resource = $link;
+        }
+
+        return $resource->lastInsertId();
     }
     
     /**
@@ -1157,13 +1163,17 @@ class MySQL
             $link = count($this->_instances);
         }
 
-        if ($validate === true && !isset($this->_instances[$link]) || empty($this->_instances[$link])) {
+        if (
+          $validate === true &&
+          !isset($this->_instances[$link]) ||
+          empty($this->_instances[$link])) {
             if (isset($this->_instances[$link])) {
                 throw new MySQL2PDOException($this->_params[$link]['errno'] .': ' . $this->_params[$link]['error']);
             } else {
-                throw new MySQL2PDOException('No db at instance #' . ($link - 1));
+                throw new MySQL2PDOException('No db at  instance #' . ($link - 1));
             }
         }
+
         return $link;
     }
     
