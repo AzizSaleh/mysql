@@ -35,7 +35,7 @@ Who is this for?
 ----------------
 This package is for site owners/developers who want to upgrade their PHP version to a version that has the mysql_connect/mysql_* functions removed without having to re-write their entire codebase to replace those functions to PDO or MySQLI.
 
-Why were the mysql extension removed?
+Why was the mysql extension removed?
 -------------------------------------
 Lack of:
 
