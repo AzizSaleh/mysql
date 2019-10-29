@@ -78,15 +78,46 @@
         return self::$_instance;
     }
 
+     /**
+      * Load an existing connection you have into the object
+      *
+      * @author Matthew Baggett
+      * @email  matthew@baggett.me
+      *
+      * @param PDO $dbh
+      * @return int
+      */
+     public function mysql_add_existing_connection(PDO $dbh)
+     {
+         $usePosition = count($this->_instances) + 1;
+
+         // Set connection params
+         $this->_params[$usePosition] = array (
+             'server'        => '',
+             'username'      => '',
+             'password'      => '',
+             'newLink'       => true,
+             'clientFlags'   => array(),
+             'errno'         => 0,
+             'error'         => "",
+             'rowCount'      => -1,
+             'lastQuery'     => false,
+         );
+
+         $this->_instances[$usePosition] = $dbh;
+
+         return $usePosition;
+     }
+
     /**
      * mysql_connect
      * http://www.php.net/manual/en/function.mysql-connect.php
      */
     public function mysql_connect($server, $username, $password, $newLink = false, $clientFlags = false, $usePosition = false)
     {
-        // If we don't have to create a new instance and we have an instance, return it
+        // If we don't have to create a new instance and we have an instance, return newest instance
         if ($newLink == false && count($this->_instances) > 1) {
-            return 1;
+            return count($this->_instances);
         }
         
         $flags = $this->_translateFlags($clientFlags);
@@ -1138,13 +1169,13 @@
         }
 
         if ($validate === true && !isset($this->_instances[$link]) || empty($this->_instances[$link])) {
-            $error = '';
             if (isset($this->_instances[$link])) {
-                die($this->_params[$link]['errno'] .': ' . $this->_params[$link]['error']);
+                throw new MySQL2PDOException($this->_params[$link]['error'], $this->_params[$link]['errno']);
             } else {
-                die('No db at instance #' . ($link - 1));
+                throw new MySQL2PDOException('No db at  instance #' . ($link - 1));
             }
         }
+
         return $link;
     }
     

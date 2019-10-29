@@ -17,7 +17,7 @@
  */
 define('TEST_HOST', 'localhost');
 define('TEST_USER', 'root');
-define('TEST_PASS', 'root');
+define('TEST_PASS', '');
 
 define('TEST_DB', 'unit_sql_v_1');
 define('TEST_TABLE', 'unit_sql_table_1');
@@ -100,7 +100,7 @@ class MySQL_Test
             }
             
             // Get mysql_* method
-            $name = strtolower(str_replace('_Test', '', $test));
+            $name = strtolower(preg_replace('/_Test([_0-9]+)?/', '', $test));
 
             // Increment # of tests
             $this->results['tests']++;
@@ -406,8 +406,7 @@ class MySQL_Test
         $badSql = 'SELCT * FROM TABL.*';
         
         mysql_query($badSql);
-
-        return mysql_errno() == 4;
+        return mysql_errno() == 1064;
     }
     
     /**
@@ -461,7 +460,7 @@ class MySQL_Test
         // Get encoding
         $code1 = mysql_client_encoding();
 
-        return strlen($code1) > 4;
+        return strlen($code1) >= 4;
     }    
 
     /**
@@ -1279,6 +1278,43 @@ class MySQL_Test
         }
 
         return true;
+    }
+
+    /**
+     * Test Adding existing connection
+     *
+     * @return boolean
+     */
+    public function MySQL_Add_Existing_Connection_Test()
+    {
+        $dbh = new PDO("mysql:host" . TEST_HOST, TEST_USER, TEST_PASS);
+
+        $ourInstance = mysql_add_existing_connection($dbh);
+
+        $this->_selectDb($ourInstance);
+
+        // Get db name
+        $query = mysql_query("SELECT DATABASE() as Databasename");
+        $dbName = mysql_fetch_assoc($query, $ourInstance);
+
+        // Must be identical
+        return ($dbName['Databasename'] === TEST_DB);
+    }
+
+    /**
+     * Test Exception Handling
+     *
+     * @return boolean
+     */
+    public function MySQL_Query_Test_2()
+    {
+        try {
+            mysql_query("SELECT DATABASE() as Databasename", 99999999);
+        } catch (MySQL2PDOException $e) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

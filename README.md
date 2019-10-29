@@ -7,13 +7,7 @@ The object duplicates all of the functionality of mysql_* functions except for m
 Implementation:
 ---------------
 In your bootstrap, include:
-
-    // Include the definitions
-    require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'MySQL_Definitions.php');
-     
-    // Include the object
-    require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'MySQL.php');
-     
+    
     // Include the mysql_* functions
     require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'MySQL_Functions.php');
      
@@ -128,6 +122,16 @@ There are 2 unit tests available in this project:
 * MySQL_Test.php - Run this test is you are using PHP with mysql_connect() enabled.
 * MySQL_Test_After.php - Run this test if the PHP version you have does not have mysql_connect() enabled.
 
+Associating an existing PDO instance
+------------------------------------
+
+Simple pass in your PDO object to `mysql_add_existing_connection` method:
+
+```
+$dbh = new PDO('mysql:dbname=testdb;host=127.0.0.1', 'root', 'password');
+
+$ourCustomInstance = mysql_add_existing_connection($dbh);
+```
 
 About:
 ------
@@ -143,7 +147,7 @@ Versions:
 
 Current Version
 ---------------
-Version 1.1
+Version 1.3
 
 Version History:
 ----------------
@@ -162,3 +166,10 @@ Version History:
 1.2 - September 2014
  * Fixed an issue (Thanks to Martijn Spruit) where the script was breaking on PHP V <= 5.3.8
  * Updated unit test for MySQL_Stat_Test to allow a <= 10 difference between the numbers.
+
+1.3 - October 2019
+ * When calling a bad instance, a MySQL2PDOException will be thrown instead of a die statement.
+ * Fixed a bug where it was returning the wrong instance id in `mysql_connect`.
+ * Added a new method `mysql_add_existing_connection` which allows you to associate an existing PDO instance to the code. See above for implementation.
+ * Thanks to Matthew Baggett (matthew@baggett.me), also located at: https://github.com/matthewbaggett/MySQL2PDO for contributing all of above three changes.
+ * Added unit test for new methods and fixed existing failing unit tests.

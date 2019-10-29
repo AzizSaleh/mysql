@@ -18,7 +18,13 @@
  */
 require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'MySQL.php');
 require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'MySQL_Definitions.php');
- 
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'MySQL2PDOException.php');
+
+// Custom function to add existing connections - See README.md
+function mysql_add_existing_connection($dbh) {
+    return MySQL::getInstance()->mysql_add_existing_connection($dbh);
+}
+
 // http://www.php.net/manual/en/function.mysql-connect.php
 function mysql_connect($server, $username, $password, $new_link = false, $client_flags = false) {
     return MySQL::getInstance()->mysql_connect($server, $username, $password, $new_link, $client_flags);
