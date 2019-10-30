@@ -309,6 +309,11 @@
         if (is_array($result)) {
             return count($result);
         }
+
+        if (!$result) {
+            return false;
+        }
+
         return $result->rowCount();
     }
 
