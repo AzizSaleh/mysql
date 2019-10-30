@@ -115,9 +115,15 @@
      */
     public function mysql_connect($server, $username, $password, $newLink = false, $clientFlags = false, $usePosition = false)
     {
-        // If we don't have to create a new instance and we have an instance, return newest instance
+        // If we aren't forcing a new link and connection exist, use it
         if ($newLink == false && count($this->_instances) > 1) {
-            return count($this->_instances);
+            foreach ($this->_params as $position => $params) {
+                if ($params['server'] == $server &&
+                    $params['username'] == $username &&
+                    $params['clientFlags'] == $clientFlags) {
+                    return $position;
+                }
+            }
         }
         
         $flags = $this->_translateFlags($clientFlags);
@@ -191,7 +197,7 @@
      * mysql_query
      * http://www.php.net/manual/en/function.mysql-query.php
      */
-    public function mysql_query($query, $link = false)
+    public function mysql_query($query, $link = false, $buffered = true)
     {
         $link = $this->_getLastLink($link);
 
@@ -200,6 +206,9 @@
                 $this->_params[$link]['rowCount'] = $res->rowCount();
                 $this->_params[$link]['lastQuery'] = $res;
                 $this->_loadError($link, false);
+                if (!$buffered) {
+                    $this->_instances[$link]->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+                }
                 return $res;
             }
         } catch (PDOException $e) {
@@ -213,6 +222,11 @@
         $errorCode = $this->_instances[$link]->errorInfo();
         $this->_params[$link]['errno'] = $errorCode[1];
         $this->_params[$link]['error'] = $errorCode[2];
+
+        if (!$buffered) {
+            $this->_instances[$link]->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+        }
+
         return false;
     }
     
@@ -222,7 +236,10 @@
      */
     public function mysql_unbuffered_query($query, $link = false)
     {
-        return $this->mysql_query($query, $link);
+        $link = $this->_getLastLink($link);
+        $this->_instances[$link]->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
+
+        return $this->mysql_query($query, $link, false);
     }
 
     /**
@@ -340,16 +357,12 @@
         if (is_array($result)) {
             return count($result);
         }
-        
-        // Hard clone (cloning PDOStatements doesn't work)
-        $query = $result->queryString;
-        $cloned = $this->mysql_query($query);
-        if ($cloned) {
-            $data = $cloned->fetchAll();
-            return count($data);
-        } else {
-            return false;
+
+        if ($result instanceof PDOStatement) {
+            return $result->rowCount();
         }
+
+        return false;
     }
 
     /**

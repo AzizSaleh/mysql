@@ -60,8 +60,7 @@ Resources
 ---------
 Since it is not possible to create resources on the fly in PHP. The following methods will not work as intended:
 
-is_resource
-get_resource_type
+`is_resource` and `get_resource_type`
 
 on the following mysql functions:
 
@@ -147,7 +146,7 @@ Versions:
 
 Current Version
 ---------------
-Version 1.3
+Version 1.4
 
 Version History:
 ----------------
@@ -173,3 +172,9 @@ Version History:
  * Added a new method `mysql_add_existing_connection` which allows you to associate an existing PDO instance to the code. See above for implementation.
  * Thanks to Matthew Baggett (matthew@baggett.me), also located at: https://github.com/matthewbaggett/MySQL2PDO for contributing all of above three changes.
  * Added unit test for new methods and fixed existing failing unit tests.
+
+1.4 - October 2019
+ * Updated `mysql_num_rows` to use PDO's `rowCount` method to return data. Thanks to Benjamin Schanzel for the contribution. 
+ * Update `mysql_unbuffered_query` to correctly set the PDO attribute.
+ * Fix a bug in `mysql_connect` which was not getting the existing link on same connections. Pointed out by Matthew Baggett.
+ * Update unit tests.

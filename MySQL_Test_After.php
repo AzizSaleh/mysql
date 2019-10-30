@@ -1238,8 +1238,51 @@ class MySQL_Test
      */
     public function MySQL_Num_Rows_Test()
     {
-        // Done in Mysql_Db_Name_Test
-        return true;
+        // Select Db
+        $this->_selectDb();
+
+        $query = "DELETE FROM " . TEST_TABLE;
+        mysql_query($query);
+
+        for ($x = 0; $x <= 2; $x++) {
+            mysql_query('INSERT INTO ' . TEST_TABLE . " (field_name) VALUES ('ID: {$x}')");
+        }
+
+        // Get row
+        $sql = 'SELECT * FROM ' . TEST_TABLE;
+
+        // Select db + query
+        $query1 = mysql_query($sql);
+
+        return mysql_num_rows($query1) == 3;
+    }
+
+    /**
+     * Test mysql_num_rows on unbuffered queries
+     *
+     * @return boolean
+     */
+    public function MySQL_Num_Rows_Test_2()
+    {
+        // Select Db
+        $this->_selectDb();
+
+        $query = "DELETE FROM " . TEST_TABLE;
+        mysql_query($query);
+
+        for ($x = 0; $x <= 2; $x++) {
+            mysql_query('INSERT INTO ' . TEST_TABLE . " (field_name) VALUES ('ID: {$x}')");
+        }
+
+        // Get row
+        $sql = 'SELECT * FROM ' . TEST_TABLE;
+
+        // Select db + query
+        $query1 = mysql_unbuffered_query($sql);
+
+        while ($row = mysql_fetch_row($query1)) {}
+
+        return mysql_num_rows($query1) == 3;
     }
     
     /**
