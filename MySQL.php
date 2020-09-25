@@ -276,7 +276,7 @@
                     break;
                 case 3:
                     // by both field name/position as array
-                    $result = $result->fetchAll();
+                    $result = $result->fetchAll(PDO::FETCH_BOTH);
                     break;
                 case 4:
                     // by field names as object
