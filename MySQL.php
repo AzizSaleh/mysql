@@ -185,7 +185,7 @@
         // Select the DB
         try {
             $this->_params[$link]['databaseName'] = $databaseName;
-            return $this->mysql_query("USE {$databaseName}", $link);
+            return $this->mysql_query("USE `{$databaseName}`", $link);
         } catch (PDOException $e) {
             return false;
         }
